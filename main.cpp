@@ -9,7 +9,7 @@ constexpr int cheight = 7;
 
 constexpr int border = 1;
 constexpr int width = cwidth * pscale * 25;
-constexpr int height = cheight * pscale * 2;
+constexpr int height = (cheight * 2 + 3) * pscale;
 
 struct Pixel {
    sf::RectangleShape pixel;
@@ -69,7 +69,8 @@ int main() {
       pixels.push_back(row);
    }
 
-   draw_string(1, 1, "***...,,", pixels);
+   draw_string(0, 1, "!\"#$%'()*+,-./:;<=>?@", pixels);
+   draw_string(0, 9, "[]\\^_`{}|~1234567890", pixels);
 
    while (window.isOpen()) {
       window.pollEvent(event);
