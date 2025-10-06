@@ -41,6 +41,18 @@ void draw_char(int x, int y, char ch, std::vector<std::vector<Pixel>>& pixels) {
    }
 }
 
+void draw_string(int x, int y, const std::string& string, std::vector<std::vector<Pixel>>& pixels) {
+   int xx = x;   
+   for (const auto& ch : string) {
+      if (xx >= pixels[0].size()) {
+         break;
+      }
+
+      draw_char(xx, y, ch, pixels);
+      xx += cwidth + 1;
+   }
+}
+
 int main() {
    sf::RenderWindow window (sf::VideoMode(width, height), "Screen Simulation", sf::Style::Titlebar | sf::Style::Close);
    window.setFramerateLimit(60);
@@ -57,16 +69,7 @@ int main() {
       pixels.push_back(row);
    }
 
-   draw_char(1, 1, '1', pixels);
-   draw_char(7, 1, '2', pixels);
-   draw_char(13, 1, '3', pixels);
-   draw_char(19, 1, '4', pixels);
-   draw_char(25, 1, '5', pixels);
-   draw_char(31, 1, '6', pixels);
-   draw_char(37, 1, '7', pixels);
-   draw_char(43, 1, '8', pixels);
-   draw_char(49, 1, '9', pixels);
-   draw_char(55, 1, '0', pixels);
+   draw_string(1, 1, "12345678901", pixels);
 
    while (window.isOpen()) {
       window.pollEvent(event);
