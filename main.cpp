@@ -69,7 +69,7 @@ int main() {
       pixels.push_back(row);
    }
 
-   draw_string(1, 1, "12345678901", pixels);
+   draw_string(1, 1, "***...,,", pixels);
 
    while (window.isOpen()) {
       window.pollEvent(event);
