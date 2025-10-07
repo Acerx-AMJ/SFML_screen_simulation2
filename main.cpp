@@ -1,7 +1,11 @@
+// Includes
+
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 #include "chars.hpp"
+
+// Constants
 
 constexpr int pscale = 7;
 constexpr int cwidth = 5;
@@ -10,6 +14,8 @@ constexpr int cheight = 7;
 constexpr int border = 1;
 constexpr int width = cwidth * pscale * 25;
 constexpr int height = (cheight * 2 + 3) * pscale;
+
+// Pixel struct
 
 struct Pixel {
    sf::RectangleShape pixel;
@@ -28,7 +34,13 @@ struct Pixel {
    }
 };
 
-void draw_char(int x, int y, char ch, std::vector<std::vector<Pixel>>& pixels) {
+// Global variables
+
+std::vector<std::vector<Pixel>> pixels;
+
+// Draw functions
+
+void draw_char(int x, int y, char ch) {
    auto it = characters.find(ch);
    if (it == characters.end()) {
       return;
@@ -41,23 +53,24 @@ void draw_char(int x, int y, char ch, std::vector<std::vector<Pixel>>& pixels) {
    }
 }
 
-void draw_string(int x, int y, const std::string& string, std::vector<std::vector<Pixel>>& pixels) {
+void draw_string(int x, int y, const std::string& string) {
    int xx = x;   
    for (const auto& ch : string) {
       if (xx >= pixels[0].size()) {
          break;
       }
 
-      draw_char(xx, y, ch, pixels);
+      draw_char(xx, y, ch);
       xx += cwidth + 1;
    }
 }
+
+// Main function
 
 int main() {
    sf::RenderWindow window (sf::VideoMode(width, height), "Screen Simulation", sf::Style::Titlebar | sf::Style::Close);
    window.setFramerateLimit(60);
    sf::Event event;
-   std::vector<std::vector<Pixel>> pixels;
 
    for (int y = 0; y < height; y += pscale) {
       std::vector<Pixel> row;
@@ -69,8 +82,8 @@ int main() {
       pixels.push_back(row);
    }
 
-   draw_string(0, 1, "!\"#$%'()*+,-./:;<=>?@", pixels);
-   draw_string(0, 9, "[]\\^_`{}|~1234567890", pixels);
+   draw_string(0, 1, "!\"#$%'()*+,-./:;<=>?@");
+   draw_string(0, 9, "[]\\^_`{}|~1234567890");
 
    while (window.isOpen()) {
       window.pollEvent(event);
